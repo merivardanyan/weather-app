@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/weather/raw', async (req, res) => {
     const {city, from, to} = req.query;
     if(!city) return res.status(400).json({error: 'City is required'});
-    let sql = 'SELECT * FROM weather_data WHERE city = ?';
+    let sql = 'SELECT getched_at, temperature, windspeed FROM weather_data WHERE city = ?';
     const params = [city];
     if(from){
         sql += ' AND fetched_at >= ?';
@@ -25,7 +25,7 @@ router.get('/weather/raw', async (req, res) => {
 router.get('/weather/avarage', async (req, res) => {
    const {city, from, to} = req.query;
    if(!city) return res.status(400).json({error: 'City is required'});
-   let sql = 'SELECT city, AVG(temperature) as avg_temperature, AVG(windspeed) as avg_windspeed FROM weather_data WHERE city = ?';
+   let sql = 'SELECT city, COUNT(*) as count, AVG(temperature) as avg_temperature, AVG(windspeed) as avg_windspeed, fetched_at FROM weather_data WHERE city = ?';
    const params = [city];
    if(from){
        sql += ' AND fetched_at >= ?';
