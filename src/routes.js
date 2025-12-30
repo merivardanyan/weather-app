@@ -3,7 +3,7 @@ const db = require('./db');
 
 const router = express.Router();
 
-router.get('/weather/row', async (req, res) => {
+router.get('/weather/raw', async (req, res) => {
     const {city, from, to} = req.query;
     if(!city) return res.status(400).json({error: 'City is required'});
     let sql = 'SELECT * FROM weather_data WHERE city = ?';
@@ -44,7 +44,7 @@ router.get('/weather/avarage', async (req, res) => {
    });
 });
 
-router.post('cities', async (req, res) => {
+router.post('/cities', async (req, res) => {
     const {city} = req.body;
     if(!city) return res.status(400).json({error: 'City is required'});
     db.run('INSERT INTO weather_data (city) VALUES (?)', [city], (err, data) => {

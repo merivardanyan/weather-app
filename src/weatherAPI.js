@@ -1,8 +1,8 @@
 const getweatherAPI = async (city) => {
     const location = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`);
     const locationData = await location.json();
-    // console.log(locationData);
-    if (locationData.results.length === 0 || !locationData.results) {
+    
+    if (!locationData.results || locationData.results.length === 0 ) {
         throw new Error('City not found');
     }
     const {latitude,longitude} = locationData.results[0];
