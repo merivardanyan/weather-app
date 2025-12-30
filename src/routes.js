@@ -3,7 +3,7 @@ const db = require('./db');
 
 const router = express.Router();
 
-router.get('/now', async (req, res) => {
+router.get('/weather/row', async (req, res) => {
     const {city, from, to} = req.query;
     if(!city) return res.status(400).json({error: 'City is required'});
     let sql = 'SELECT * FROM weather_data WHERE city = ?';
@@ -22,7 +22,7 @@ router.get('/now', async (req, res) => {
     });
 });
 
-router.get('/avarage', async (req, res) => {
+router.get('/weather/avarage', async (req, res) => {
    const {city, from, to} = req.query;
    if(!city) return res.status(400).json({error: 'City is required'});
    let sql = 'SELECT city, AVG(temperature) as avg_temperature, AVG(windspeed) as avg_windspeed FROM weather_data WHERE city = ?';
@@ -42,6 +42,16 @@ router.get('/avarage', async (req, res) => {
        if(err) return res.status(500).json({error: err.message});
        res.json(data);
    });
+});
+
+router.post('cities', async (req, res) => {
+    const {city} = req.body;
+    if(!city) return res.status(400).json({error: 'City is required'});
+    db.run('INSERT INTO weather_data (city) VALUES (?)', [city], (err, data) => {
+        if(err) return res.status(500).json({error: err.message});
+        res.status(201).json({message: 'City added',city});
+    });
+
 });
 
 module.exports = router;
