@@ -1,0 +1,26 @@
+🌤️ Weather Data Aggregator
+
+Features
+
+Add cities for weather tracking
+Fetch current weather data
+Store weather data in sqlite
+Periodic weather update (every 10 mins)
+REST API enpoints
+Unit tests with jest
+
+Tech stack
+
+Node.Js
+Express
+SQLite
+Open-Meteo API
+Jest/Supertest
+
+installation
+
+npm install
+
+to run the application
+
+node src/index.js
